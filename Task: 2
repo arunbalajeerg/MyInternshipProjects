@@ -1,0 +1,30 @@
+import random
+def guess_num():
+    my_num = random.randint(1, 9)
+    attempts = 0
+
+    print("Guessing Game using numbers by Arun!")
+    print("I am thinking of a number between 1 and 9.")
+
+    while True:
+        try:
+            guess = int(input("your guess:  "))
+            attempts += 1
+
+            if guess == my_num:
+                print(F"it took you {attempts} attempts to guess it!")
+                if attempts<=2:
+                    print("congratulations!")
+                else:
+                    print("Disgrace!")
+                break
+            elif guess < my_num:
+                print("too low.")
+            else:
+                print("too high.")
+
+        except ValueError:
+            print("invalid number")
+
+if __name__ == "__main__":
+    guess_num()
