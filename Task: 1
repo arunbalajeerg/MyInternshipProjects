@@ -1,0 +1,21 @@
+import requests
+import csv
+from bs4 import BeautifulSoup
+url = 'https://en.wikipedia.org/wiki/A_Song_of_Ice_and_Fire'
+response = requests.get(url)
+if response.status_code == 200:
+    soup = BeautifulSoup(response.text, 'html.parser')
+    articles = soup.find_all('div', class_='gs-c-promo')
+    scraped_data = []
+    for article in articles:
+        title = article.find('h3').text.strip()
+        scraped_data.append({'Title': title})
+    csv_filename = 'asoiaf.csv'
+    with open(csv_filename, 'w', newline='', encoding='utf-8') as csv_file:
+        fieldnames = ['Title']
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(scraped_data)
+    print(f'Scraped data is on: {csv_filename}')
+else:
+    print("Failed to scrap data")
