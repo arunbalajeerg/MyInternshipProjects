@@ -1,0 +1,37 @@
+import requests
+def get_exchange_rate(base_currency, target_currency):
+    api_key = 'api.exchangeratesapi.io'
+    url = f'https://api.example.com/exchange_rates?base={base_currency}&target={target_currency}&apikey={api.exchangeratesapi.io}'
+
+    response = requests.get(url)
+    data = response.json()
+
+    if 'error' in data:
+        raise Exception(f"Error: {data['error']['info']}")
+
+    return data['conversion_rate']
+
+def convert_currency(amount, exchange_rate):
+    return amount * exchange_rate
+
+def main():
+    print("Welcome to the Currency Converter!")
+
+    try:
+        base_currency = input("Enter the source currency code: ").upper()
+        target_currency = input("Enter the target currency code: ").upper()
+        amount = float(input("Enter the amount to convert: "))
+
+        exchange_rate = get_exchange_rate(base_currency, target_currency)
+        converted_amount = convert_currency(amount, exchange_rate)
+
+        print(f"\n{amount} {base_currency} is equal to {converted_amount:.2f} {target_currency}")
+        print(f"Exchange Rate: 1 {base_currency} = {exchange_rate:.4f} {target_currency}")
+
+    except ValueError:
+        print("Error: Please enter a valid numeric amount.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
